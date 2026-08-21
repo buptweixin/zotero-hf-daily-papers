@@ -1,0 +1,125 @@
+<linkset>
+  <html:link rel="localization" href="__addonRef__-preferences.ftl" />
+</linkset>
+<html:style>
+  .hfp-pref-section { display: flex; flex-direction: column; gap: 8px;
+  margin-bottom: 16px; } .hfp-pref-section h3 { margin: 0; font-size: 1.05em; }
+  .hfp-pref-row { display: flex; align-items: center; gap: 8px; } .hfp-pref-row
+  label { width: 260px; flex: none; } .hfp-pref-row input[type="number"] {
+  width: 90px; } .hfp-pref-row input[type="text"] { flex: 1; } .hfp-pref-col {
+  display: flex; flex-direction: column; gap: 6px; } .hfp-pref-col textarea {
+  width: 100%; min-height: 160px; font-family: monospace; font-size: 12px; }
+  .hfp-pref-help { margin: 0; opacity: 0.7; font-size: 12px; } .hfp-pref-row
+  button { flex: none; } .hfp-pref-result { white-space: pre-line; }
+  .hfp-pref-result.hfp-pref-ok { color: #0f7b2f; opacity: 1; }
+  .hfp-pref-result.hfp-pref-err { color: #c42b1c; opacity: 1; }
+</html:style>
+<groupbox
+  onload="Zotero.__addonInstance__.hooks.onPrefsEvent('load', { window })"
+>
+  <label><html:h2 data-l10n-id="pref-title"></html:h2></label>
+
+  <html:div class="hfp-pref-section">
+    <html:h3 data-l10n-id="pref-section-sync"></html:h3>
+    <checkbox id="hfp-autoSync" data-l10n-id="pref-autoSync" />
+    <html:div class="hfp-pref-row">
+      <html:label
+        for="hfp-lookbackDays"
+        data-l10n-id="pref-lookbackDays"
+      ></html:label>
+      <html:input
+        type="number"
+        id="hfp-lookbackDays"
+        min="1"
+        max="30"
+        step="1"
+      />
+    </html:div>
+    <html:div class="hfp-pref-row">
+      <html:label
+        for="hfp-minUpvotes"
+        data-l10n-id="pref-minUpvotes"
+      ></html:label>
+      <html:input
+        type="number"
+        id="hfp-minUpvotes"
+        min="0"
+        max="999"
+        step="1"
+      />
+    </html:div>
+    <checkbox id="hfp-downloadPdf" data-l10n-id="pref-downloadPdf" />
+  </html:div>
+
+  <html:div class="hfp-pref-section">
+    <html:h3 data-l10n-id="pref-section-tags"></html:h3>
+    <html:div class="hfp-pref-row">
+      <html:label
+        for="hfp-rootCollectionName"
+        data-l10n-id="pref-rootCollectionName"
+      ></html:label>
+      <html:input type="text" id="hfp-rootCollectionName" />
+    </html:div>
+    <html:div class="hfp-pref-row">
+      <html:label
+        for="hfp-sourceTag"
+        data-l10n-id="pref-sourceTag"
+      ></html:label>
+      <html:input type="text" id="hfp-sourceTag" />
+    </html:div>
+    <checkbox id="hfp-tagKeywords" data-l10n-id="pref-tagKeywords" />
+    <html:div class="hfp-pref-row">
+      <html:label
+        for="hfp-hotThreshold"
+        data-l10n-id="pref-hotThreshold"
+      ></html:label>
+      <html:input
+        type="number"
+        id="hfp-hotThreshold"
+        min="1"
+        max="999"
+        step="1"
+      />
+    </html:div>
+    <checkbox
+      id="hfp-createDateSubcollections"
+      data-l10n-id="pref-createDateSubcollections"
+    />
+    <checkbox
+      id="hfp-createTopicCollections"
+      data-l10n-id="pref-createTopicCollections"
+    />
+    <html:div class="hfp-pref-col">
+      <html:label
+        for="hfp-topicRules"
+        data-l10n-id="pref-topicRules"
+      ></html:label>
+      <html:textarea id="hfp-topicRules" rows="8"></html:textarea>
+      <html:div class="hfp-pref-row">
+        <html:button
+          id="hfp-validateRules"
+          data-l10n-id="pref-validate-rules"
+        ></html:button>
+        <html:button
+          id="hfp-resetRules"
+          data-l10n-id="pref-reset-rules"
+        ></html:button>
+      </html:div>
+      <html:p
+        id="hfp-topicRulesValidation"
+        class="hfp-pref-help hfp-pref-result"
+        hidden="hidden"
+      ></html:p>
+      <html:p
+        class="hfp-pref-help"
+        data-l10n-id="pref-topicRules-help"
+      ></html:p>
+    </html:div>
+  </html:div>
+</groupbox>
+<vbox>
+  <html:label
+    data-l10n-id="pref-help"
+    data-l10n-args='{"time": "__buildTime__","name": "__addonName__","version":"__buildVersion__"}'
+  ></html:label>
+</vbox>
