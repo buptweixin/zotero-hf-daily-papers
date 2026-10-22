@@ -1,0 +1,70 @@
+name: Codex review
+
+# 仅手动触发（workflow_dispatch）。
+# 不在 pull_request / push 上触发，是为了避免仓库未配置 OPENAI_API_KEY 时把 CI 变红：
+# 没有该 secret 时本工作流只打印 skipped 并成功退出。
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "审查目标（PR 编号 / commit SHA / tag，仅记录，不自动执行外部命令）"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: codex-review-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  codex-review:
+    name: Codex review (manual)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for OPENAI_API_KEY
+        id: detect
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "skipping: no OPENAI_API_KEY"
+            echo "has_key=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "OPENAI_API_KEY is configured, will run Codex."
+            echo "has_key=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Show target
+        run: |
+          echo "workflow: 手动触发的 Codex 审查 / release notes 草稿"
+          echo "target: ${{ inputs.target }}"
+          echo "ref: ${{ github.ref }}"
+          echo "sha: ${{ github.sha }}"
+
+      - name: Setup Node.js
+        if: steps.detect.outputs.has_key == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Run Codex
+        if: steps.detect.outputs.has_key == 'true'
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          # Codex CLI 调用位置，待实际启用时再打开。
+          # 启用步骤（需确认 npm 包与当前 CLI 参数可用）：
+          #   1) 安装 Codex CLI：npm install -g @openai/codex
+          #   2) 以只读沙箱审查改动：codex exec --sandbox read-only "review the diff on this branch"
+          #   3) 把输出写入 review 评论 / release notes 草稿
+          #
+          # 这里故意不写任何会失败的命令：仓库尚未配置 Codex 所需的额度与 token 使用策略，
+          # 保持工作流为绿，仅作为后续接入的占位。
+          echo "OPENAI_API_KEY detected; Codex invocation is intentionally left as a placeholder."

@@ -2,6 +2,7 @@
 
 [![zotero target version](https://img.shields.io/badge/Zotero-7-green?style=flat-square&logo=zotero&logoColor=CC2936)](https://www.zotero.org)
 [![Using Zotero Plugin Template](https://img.shields.io/badge/Using-Zotero%20Plugin%20Template-blue?style=flat-square&logo=github)](https://github.com/windingwind/zotero-plugin-template)
+[![CI](https://github.com/buptweixin/zotero-hf-daily-papers/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/buptweixin/zotero-hf-daily-papers/actions/workflows/ci.yml)
 
 在 Zotero 里浏览、入库、自动分类打标签 [HuggingFace Daily Papers](https://huggingface.co/papers)。
 
@@ -33,6 +34,17 @@ English summary: A Zotero 7 plugin to browse HuggingFace Daily Papers, import th
 
 1. 下载 [Releases](../../releases) 中的 `.xpi` 文件（或自行构建，见下文）。
 2. Zotero ▸ Tools ▸ Plugins ▸ 齿轮图标 ▸ Install Plugin From File… 选择 `.xpi`。
+
+## Status & adoption
+
+- **发布状态**：仓库现有 2 个 release —— `v0.1.0`（公开发布于 2026-08-21，附可安装的 `zotero-hf-daily-papers.xpi`）与 `release`（自动更新用的 `update.json` / `update-beta.json` 清单）。
+- **下载量**：截至 2026-10-22，上述 release 的资产累计下载 **12** 次（`zotero-hf-daily-papers.xpi` 4 次、`update.json` 8 次、`update-beta.json` 0 次）。可自行核对：
+
+  ```sh
+  gh api repos/buptweixin/zotero-hf-daily-papers/releases --jq '[.[].assets[].download_count]|add'
+  ```
+
+- **采用阶段**：这是一个新项目，采用仍处早期，接口与行为可能随版本调整。使用中遇到问题、有功能请求或想补充主题分类规则，欢迎提 [Issue](https://github.com/buptweixin/zotero-hf-daily-papers/issues)。
 
 ## 开发
 
